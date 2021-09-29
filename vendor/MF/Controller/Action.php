@@ -10,7 +10,7 @@
             $this->view = new \stdClass();
         }
 
-        protected function render($view, $layout) {
+        protected function render($view, $layout = 'layout') {
             
             $this->view->page = $view;
 
