@@ -1,0 +1,19 @@
+{
+    "name": "vendor/miniframework",
+    "description" : "developing a miniframework using the MVC architecture",
+    "require" : {
+        "php": ">= 7.0"
+    },
+    "authors": [
+        {
+            "name": "Flavio Moreira",
+            "email": "FlavioTerraMoreira@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/",
+            "MF\\": "vendor/MF/"
+        }
+    }
+}
