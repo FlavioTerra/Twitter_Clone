@@ -38,7 +38,23 @@
 
             return $this;
         }
-        
+
+        // Retrive a user by email
+        public function getUserByEmail() {
+            $query = 'select name,
+                             email
+                        from users
+                       where email = :email';
+
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':email', $this->__get('email'));
+
+            $stmt->execute();
+
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);            
+        }
+
         // Valid if registration can be performed
         public function validateRegistration() {
             $valid = true;
@@ -51,14 +67,10 @@
 
             } else if(strlen($this->__get('password')) < 3) {
                 $valid = false;
+
             }
 
             return $valid;
-        }
-
-        // Retrive a user by email
-        public function getUserByEmail() {
-            
         }
     }
 
