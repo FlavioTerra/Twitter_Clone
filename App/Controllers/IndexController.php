@@ -34,7 +34,7 @@
 
             $user->__set('name', $_POST['name']);
             $user->__set('email', $_POST['email']);
-            $user->__set('password', $_POST['password']);
+            $user->__set('password', md5($_POST['password']));
 
             // Success
             if($user->validateRegistration() && count($user->getUserByEmail()) == 0) {

@@ -32,7 +32,7 @@
 
             $stmt->bindValue(':name', $this->__get('name'));
             $stmt->bindValue(':email', $this->__get('email'));
-            $stmt->bindValue(':password', $this->__get('password')); // md5() cryptography hash 32 caracters
+            $stmt->bindValue(':password', $this->__get('password')); 
 
             $stmt->execute();
 
