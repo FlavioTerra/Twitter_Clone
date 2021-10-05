@@ -26,6 +26,24 @@
                 'action' => 'registrar'
             );
 
+            $routes['autenticar'] = array(
+                'route' => '/autenticar',
+                'controller' => 'authController',
+                'action' => 'autenticar'
+            );
+
+            $routes['timeline'] = array(
+                'route' => '/timeline',
+                'controller' => 'appController',
+                'action' => 'timeline'
+            );
+
+            $routes['sair'] = array(
+                'route' => '/sair',
+                'controller' => 'authController',
+                'action' => 'sair'
+            );
+
             $this->setRoutes($routes);
         }    
     }

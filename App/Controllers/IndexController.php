@@ -9,12 +9,14 @@
 
         public function index() {   
 
+            $this->view->login = isset($_GET['login']) ? $_GET['login'] : '';
+
             $this->render('index');
         }
 
         public function inscreverse() {
 
-            $this->view->erroCadastro = false;
+            $this->view->errorReg = false;
 
             $this->view->user = array(
                 'name' => '',
@@ -34,14 +36,14 @@
             $user->__set('email', $_POST['email']);
             $user->__set('password', $_POST['password']);
 
-            // Sucess
+            // Success
             if($user->validateRegistration() && count($user->getUserByEmail()) == 0) {
                 $user->save();
                 $this->render('cadastro');   
 
             // Error
             } else {
-                $this->view->erroCadastro = true;
+                $this->view->errorReg = true;
 
                 $this->view->user = array(
                     'name' => $_POST['name'],
