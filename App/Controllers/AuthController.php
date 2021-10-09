@@ -25,7 +25,6 @@
 
                 header('Location: /timeline');
                 
-                echo 'Autenticado';
             } else {
                 header('Location: /?login=error');
             }

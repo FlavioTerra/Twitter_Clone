@@ -19,7 +19,7 @@
             $this->$attribute = $value;
         }
 
-        // Save
+        // Save User
         public function save() {
             $query = 'insert into users (name,
                                          email,
@@ -39,7 +39,7 @@
             return $this;
         }
 
-        // Retrive a user by email
+        // Retrive a user by email for validation 
         public function getUserByEmail() {
             $query = 'select name,
                              email
@@ -73,6 +73,7 @@
             return $valid;
         }
 
+        // Valid if the user is registered for authentication
         public function authenticate() {
             $query = 'select id,
                              name,
