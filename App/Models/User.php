@@ -98,6 +98,29 @@
 
             return $this;  
         }
+
+        public function getAll() {
+            $query = 'select u.id,
+                             u.name,
+                             u.email,
+                             (select count(1)
+                                from usersfollowers uf
+                               where uf.user_id = :id
+                                 and uf.user_id_follow = u.id
+                             ) following_yn
+                        from users u    
+                       where u.name like :name
+                         and u.id <> :id';
+            
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':name', '%' . $this->__get('name') . '%');
+            $stmt->bindValue(':id', $this->__get('id'));
+
+            $stmt->execute();
+
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        }
     }
 
 ?>
