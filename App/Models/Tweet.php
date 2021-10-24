@@ -40,11 +40,15 @@
         public function getAll() {
             $query = "select t.id, 
                              u.name, 
+                             t.user_id,
                              t.tweet, 
                              DATE_FORMAT(t.date, '%d/%m/%y %H:%i') date
                         from tweets t left join users u
                           on t.user_id = u.id
                        where t.user_id = :user_id
+                          or t.user_id in (select uf.user_id_follow  
+                                             from usersfollowers uf
+                                            where uf.user_id = :user_id)
                     order by t.date desc";
             
             $stmt = $this->db->prepare($query);

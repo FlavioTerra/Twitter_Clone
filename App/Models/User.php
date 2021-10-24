@@ -103,7 +103,7 @@
             $query = 'select u.id,
                              u.name,
                              u.email,
-                             (select count(1)
+                             (select count(*)
                                 from usersfollowers uf
                                where uf.user_id = :id
                                  and uf.user_id_follow = u.id
@@ -121,6 +121,42 @@
 
             return $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
-    }
 
+        public function countAllTweetsUser() {
+            $query = 'select count(*) total_tweets from tweets where user_id = :id';
+
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':id', $this->__get('id'));
+
+            $stmt->execute();
+
+            return $stmt->fetch(\PDO::FETCH_OBJ);
+        }
+
+        public function countAllFollowing() {
+            $query = 'select count(*) total_following from usersfollowers where user_id = :id';
+
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':id', $this->__get('id'));
+
+            $stmt->execute();
+
+            return $stmt->fetch(\PDO::FETCH_OBJ);
+        }
+
+        public function countAllFollowers() {
+            $query = 'select count(*) total_followers from usersfollowers where user_id_follow = :id';
+
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':id', $this->__get('id'));
+
+            $stmt->execute();
+
+            return $stmt->fetch(\PDO::FETCH_OBJ);
+        }
+
+    }
 ?>

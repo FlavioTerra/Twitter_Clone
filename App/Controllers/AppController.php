@@ -17,6 +17,14 @@
 
             $this->view->tweets = $tweet->getAll();
 
+            $infosUser = Container::getModel('user');
+
+            $infosUser->__set('id', $_SESSION['id']);
+
+            $this->view->allTweetsUser = $infosUser->countAllTweetsUser();
+            $this->view->allFollowing = $infosUser->countAllFollowing();
+            $this->view->allFollowers = $infosUser->countAllFollowers();
+
             $this->render('timeline');
         }
 

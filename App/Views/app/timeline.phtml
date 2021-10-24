@@ -27,7 +27,7 @@
 					
 					<div class="row mt-2 mb-2">
 						<div class="col mb-2">
-							<span class="perfilPainelNome">Nome do Usuário</span>
+							<span class="perfilPainelNome"><?= $_SESSION['name']?></span>
 						</div>
 					</div>
 
@@ -35,17 +35,17 @@
 
 						<div class="col">
 							<span class="perfilPainelItem">Tweets</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->allTweetsUser->total_tweets ?></span>
 						</div>
 
 						<div class="col">
 							<span class="perfilPainelItem">Seguindo</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->allFollowing->total_following ?></span>
 						</div>
 
 						<div class="col">
 							<span class="perfilPainelItem">Seguidores</span><br />
-							<span class="perfilPainelItemValor">0</span>
+							<span class="perfilPainelItemValor"><?= $this->view->allFollowers->total_followers ?></span>
 						</div>
 
 					</div>
@@ -70,25 +70,23 @@
 			</div>
 
 			<?php foreach ($this->view->tweets as $key => $tweet) { ?>
-
 				<div class="row tweet">
 					<div class="col">
 						<p><strong><?= $tweet->name ?></strong> <span class="text text-muted">- <?= $tweet->date ?></span></p>
 						<p><?= $tweet->tweet ?></p>
 
 						<br />
-						<form>
-							<div class="col d-flex justify-content-end">
-								<button type="submit" class="btn btn-danger"><small>Remover</small></button>
-							</div>
-						</form>
+						<?php if($tweet->user_id == $_SESSION['id']) { ?>
+							<form>
+								<div class="col d-flex justify-content-end">
+									<button type="submit" class="btn btn-danger"><small>Remover</small></button>
+								</div>
+							</form>
+						<?php } ?>
 					</div>
 				</div>
-
 			<?php } ?>
-
 		</div>
-
 
 		<div class="col-md-3">
 			<div class="quemSeguir">
