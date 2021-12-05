@@ -50,6 +50,12 @@
                 'action' => 'tweet'
             );
 
+            $routes['removeTweet'] = array(
+                'route' => '/removeTweet',
+                'controller' => 'appController',
+                'action' => 'removeTweet'
+            );
+
             $routes['quemSeguir'] = array(
                 'route' => '/quemSeguir',
                 'controller' => 'appController',

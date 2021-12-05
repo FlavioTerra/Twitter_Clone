@@ -17,13 +17,7 @@
 
             $this->view->tweets = $tweet->getAll();
 
-            $infosUser = Container::getModel('user');
-
-            $infosUser->__set('id', $_SESSION['id']);
-
-            $this->view->allTweetsUser = $infosUser->countAllTweetsUser();
-            $this->view->allFollowing = $infosUser->countAllFollowing();
-            $this->view->allFollowers = $infosUser->countAllFollowers();
+            $this->getInfoUser();
 
             $this->render('timeline');
         }
@@ -42,13 +36,17 @@
             header('Location: /timeline');
         }
 
-        public function validAuthentication() {
+        public function removeTweet() {
 
-            session_start();
+            $this->validAuthentication();
 
-            if(!isset($_SESSION['id']) && !isset($_SESSION['name'])) {
-                header('Location: /?login=error');
-            }
+            $tweet = Container::getModel('tweet');
+
+            $tweet->__set('id', $_GET['removeTweet']);
+
+            $tweet->remove();
+
+            header('Location: /timeline');
         }
 
         public function quemSeguir() {
@@ -67,6 +65,8 @@
 
                 $this->view->users = $users->getAll();
             }
+
+            $this->getInfoUser();
 
             $this->render('quemSeguir');
         }
@@ -90,6 +90,25 @@
             }
 
             header('Location: /quemSeguir');
+        }
+
+        public function getInfoUser() {
+            $infosUser = Container::getModel('user');
+
+            $infosUser->__set('id', $_SESSION['id']);
+
+            $this->view->allTweetsUser = $infosUser->countAllTweetsUser();
+            $this->view->allFollowing = $infosUser->countAllFollowing();
+            $this->view->allFollowers = $infosUser->countAllFollowers();
+        }
+        
+        public function validAuthentication() {
+
+            session_start();
+
+            if(!isset($_SESSION['id']) && !isset($_SESSION['name'])) {
+                header('Location: /?login=error');
+            }
         }
     }
 

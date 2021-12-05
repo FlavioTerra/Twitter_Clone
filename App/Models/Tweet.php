@@ -36,6 +36,20 @@
             return $this;
         }
 
+        // Remove Tweet
+        public function remove() {
+            $query = 'delete from tweets
+                            where id = :id';
+                      
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':id', $this->__get('id'));
+
+            $stmt->execute();
+
+            return true;
+        }
+
         // Read Tweet
         public function getAll() {
             $query = "select t.id, 
@@ -59,7 +73,5 @@
 
             return $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
-
     }
-
 ?>
