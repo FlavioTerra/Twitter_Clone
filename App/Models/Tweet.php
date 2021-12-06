@@ -50,8 +50,27 @@
             return true;
         }
 
-        // Read Tweet
-        public function getAll() {
+        // count total tweets
+        public function getTotalTweets() {
+            $query = "select count(*) as total_tweets
+                        from tweets t left join users u
+                          on t.user_id = u.id
+                       where t.user_id = :user_id
+                          or t.user_id in (select uf.user_id_follow  
+                                             from usersfollowers uf
+                                            where uf.user_id = :user_id)";
+
+            $stmt = $this->db->prepare($query);
+
+            $stmt->bindValue(':user_id', $this->__get('user_id'));
+
+            $stmt->execute();
+
+            return $stmt->fetch(\PDO::FETCH_OBJ);
+        }
+
+        // Get tweets with pagination
+        public function getPerPage($limit, $offset) {
             $query = "select t.id, 
                              u.name, 
                              t.user_id,
@@ -63,7 +82,9 @@
                           or t.user_id in (select uf.user_id_follow  
                                              from usersfollowers uf
                                             where uf.user_id = :user_id)
-                    order by t.date desc";
+                    order by t.date desc
+                       limit $limit
+                      offset $offset";
             
             $stmt = $this->db->prepare($query);
 

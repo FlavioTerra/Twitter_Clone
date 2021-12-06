@@ -78,15 +78,44 @@
 
 						<br />
 						<?php if($tweet->user_id == $_SESSION['id']) { ?>
-							<form action="/removeTweet?removeTweet=<?=$tweet->id?>" method="post">
-								<div class="col d-flex justify-content-end">
-									<button type="submit" class="btn btn-danger"><small>Remover</small></button>
-								</div>
-							</form>
+							<div class="col d-flex justify-content-end">
+								<a href="/removeTweet?removeTweet=<?=$tweet->id?>" class="btn btn-danger">
+									<small>Remover</small>
+								</a>
+							</div>
 						<?php } ?>
 					</div>
 				</div>
 			<?php } ?>
+
+			<div class="row mt-4 d-flex justify-content-between">
+				<nav>
+					<ul class="pagination pagination-sm">
+						<li class="page-item">
+							<a href="?page=1" class="page-link">
+								<span>&laquo;</span>
+								<span class="sr-only">Anterior</span> 
+							</a>
+						</li>
+
+						<?php for($cont = 1; $cont <= $this->view->totalPages; $cont++) {?>
+							<li class="page-item">
+								<a href="?page=<?=$cont?>" class="page-link"><?= $cont ?></a>
+							</li>
+						<?php } ?>
+
+						<li class="page-item">
+							<a href="?page=<?=$this->view->totalPages?>" class="page-link">
+								<span>&raquo;</span>
+								<span class="sr-only">Próximo</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<div>
+					-
+				</div>
+			</div>
 		</div>
 
 		<div class="col-md-3">

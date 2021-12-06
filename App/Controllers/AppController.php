@@ -15,7 +15,13 @@
 
             $tweet->__set('user_id', $_SESSION['id']);
 
-            $this->view->tweets = $tweet->getAll();
+            // Variables for pagination 
+            $totalRecords = 10;
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $displacement = ($page - 1) * 10;
+            
+            $this->view->tweets = $tweet->getPerPage($totalRecords,  $displacement);
+            $this->view->totalPages = ceil($tweet->getTotalTweets()->total_tweets / $totalRecords);
 
             $this->getInfoUser();
 
