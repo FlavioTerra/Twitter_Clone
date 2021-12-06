@@ -12,16 +12,19 @@
             $this->validAuthentication();
 
             $tweet = Container::getModel('tweet');
+            $countTweets = Container::getModel('user');
 
             $tweet->__set('user_id', $_SESSION['id']);
+            $countTweets->__set('id', $_SESSION['id']);
 
             // Variables for pagination 
             $totalRecords = 10;
             $page = isset($_GET['page']) ? $_GET['page'] : 1;
             $displacement = ($page - 1) * 10;
-            
+
             $this->view->tweets = $tweet->getPerPage($totalRecords,  $displacement);
-            $this->view->totalPages = ceil($tweet->getTotalTweets()->total_tweets / $totalRecords);
+            $this->view->totalPages = ceil($countTweets->countAllTweets()->total_tweets / $totalRecords);
+            $this->view->currentPage = $page;
 
             $this->getInfoUser();
 
@@ -103,7 +106,7 @@
 
             $infosUser->__set('id', $_SESSION['id']);
 
-            $this->view->allTweetsUser = $infosUser->countAllTweetsUser();
+            $this->view->allTweetsUser = $infosUser->countAllTweets();
             $this->view->allFollowing = $infosUser->countAllFollowing();
             $this->view->allFollowers = $infosUser->countAllFollowers();
         }

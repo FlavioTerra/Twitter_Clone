@@ -122,8 +122,18 @@
             return $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
 
-        public function countAllTweetsUser() {
-            $query = 'select count(*) total_tweets from tweets where user_id = :id';
+        public function countAllTweets() {
+            $query = "select count(*) as total_tweets,
+                             (select count(*) 
+                                from tweets tw
+                               where tw.user_id = :id
+                             ) as total_tweets_user
+                        from tweets t left join users u
+                          on t.user_id = u.id
+                       where t.user_id = :id
+                          or t.user_id in (select uf.user_id_follow  
+                                             from usersfollowers uf
+                                            where uf.user_id = :id)";
 
             $stmt = $this->db->prepare($query);
 
